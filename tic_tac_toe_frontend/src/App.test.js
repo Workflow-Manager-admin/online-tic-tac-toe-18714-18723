@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders tic tac toe game', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  // Should have a restart button and status area
+  expect(screen.getByRole('button', { name: /restart/i })).toBeInTheDocument();
+  expect(screen.getByText(/current player|winner|draw/i)).toBeInTheDocument();
 });

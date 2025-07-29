@@ -1,104 +1,146 @@
-/* CSS Variables for Theme Management */
+/* Minimalistic, Brand-Colored, Responsive Tic Tac Toe CSS */
+
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #1976d2;
+  --secondary: #424242;
+  --accent: #fcba03;
+  --bg: #fff;
+  --board-bg: #fafbff;
+  --text: #212121;
+  --btn-bg: #1976d2;
+  --btn-bg-hover: #1565c0;
+  --btn-text: #fff;
+  --border: #42424240;
+  --shadow: 0 3px 20px 0 rgba(66,66,66,0.06);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+body {
+  background: var(--bg);
+  color: var(--text);
+  box-sizing: border-box;
+  margin: 0;
+  font-family: system-ui, sans-serif;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+.tic-tac-toe-root {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.status-area {
+  min-height: 2.6em;
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.status-area {
+  transition: color 0.2s;
+}
+
+/* Game Board */
+.ttt-board {
+  width: min(85vw, 320px);
+  max-width: 100vw;
+  aspect-ratio: 1 / 1;
+  background: var(--board-bg);
+  border: 2px solid var(--secondary);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(3,1fr);
+}
+
+.ttt-square {
+  background: #fff;
+  color: var(--secondary);
+  border: 1.5px solid var(--border);
+  min-width: 0;
+  min-height: 0;
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-align: center;
+  outline: none;
+  user-select: none;
+  transition: outline 0.12s, box-shadow 0.12s, background 0.18s;
+  cursor: pointer;
+}
+
+.ttt-square:disabled {
+  background: #fbfbfb;
+  color: #cacaca;
+  cursor: default;
+}
+
+.ttt-square[aria-label*="X"] {
+  color: var(--primary);
+}
+
+.ttt-square[aria-label*="O"] {
+  color: var(--secondary);
+}
+
+.ttt-square:active:not(:disabled) {
+  background: #f1f4fc;
+}
+
+.ttt-square:focus-visible {
+  outline: 2.5px solid var(--accent);
+}
+
+/* Winning square styling is via inline style */
+
+/* Restart Button */
+.restart-btn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 0.7em 2.3em;
+  font-weight: bold;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.07);
+  letter-spacing: 0.6px;
+  margin-top: 0.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.16s, box-shadow 0.18s;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.restart-btn:hover,
+.restart-btn:focus-visible {
+  background: var(--btn-bg-hover);
+  box-shadow: 0 8px 18px -6px var(--primary);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
+/* Responsive adjustments */
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 600px) {
+  .ttt-board {
+    width: min(96vw, 320px);
+    border-radius: 10px;
   }
-  to {
-    transform: rotate(360deg);
+  .status-area {
+    font-size: 1rem;
+  }
+  .restart-btn {
+    padding: 0.6em 1.2em;
+    font-size: 0.95rem;
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+@media (max-width: 400px) {
+  .ttt-board {
+    width: 96vw;
+  }
+  .tic-tac-toe-root {
+    padding: 0.7rem 0;
   }
 }
